@@ -18,7 +18,7 @@
 
         <div class="flex justify-between">
             <div class="font-medium">Member Since</div>
-            <div class="pl-3"><?= date('d F Y', strtotime($user->created_at)) ?></div>
+            <div class="pl-3"><?= date('d F Y', strtotime($user->created)) ?></div>
         </div>
 
         <div class="card-actions justify-end mt-5">
