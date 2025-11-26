@@ -11,9 +11,9 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     </head>
 
-    <body class="min-h-screen bg-base-200">
+    <body class="min-h-screen bg-base-300">
         <!-- navbar -->
-        <div class="navbar bg-primary text-white shadow-md px-10">       
+        <div class="navbar bg-neutral text-neutral-content shadow-md px-10">       
             <div class="flex-1">
                 <span class="font-bold text-xl">JY Store</span>
             </div>
@@ -24,7 +24,7 @@
                         <i class="fas fa-2xl fa-user-circle"></i>
                     </div>
 
-                    <ul class="menu dropdown-content bg-primary z-1 mt-3 w-52 p-2 shadow">
+                    <ul class="menu dropdown-content bg-base-200 text-neutral z-1 mt-3 w-52 p-2 shadow">
                         <li>
                             <a href="<?= $this->Url->build(['_name' => 'users.show']) ?>">Profile</a>
                         </li>
