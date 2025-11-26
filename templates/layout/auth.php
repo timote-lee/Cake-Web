@@ -15,13 +15,7 @@
     </head>
 
     <body>
-        <div class="left-container bg-base-content">
-            <!-- <div class="body">
-                <div class="text-white fw-bold text-6xl">JY Store</div>     
-            </div> -->
-        </div>
-
-        <div class="right-container">
+        <div class="main">
             <div class="body">
                 <?= $this->fetch('main') ?>
             </div>
