@@ -1,0 +1,1 @@
+<p>Your email verification code: <b><?= $code ?></p>

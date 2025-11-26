@@ -65,6 +65,11 @@ return function (RouteBuilder $routes): void
         $routes->post('/', ['action' => 'register'], 'register');
     });
 
+    $routes->scope('/email',  ['prefix' => 'Auth', 'controller' => 'Email'], function(RouteBuilder $routes)
+    {
+        $routes->post('/send', ['action' => 'send'], 'email.send');
+    });
+
     $routes->scope('/me', ['controller' => 'Users'],  function(RouteBuilder $routes)
     {
         $routes->get('/', ['action' => 'show'], 'users.show');

@@ -16,6 +16,15 @@
         <span>Email</span>
     </label>
 
+    <div class="join w-full mb-4">
+        <label class="floating-label w-full">
+            <input type="text" class="input input-lg w-full " name="verification_code" placeholder="Verification Code">
+            <span>Verification Code</span>
+        </label>
+
+        <button type="button" id="btn-send" class="btn btn-lg btn-soft btn-primary join-item">Send</button>
+    </div>
+
     <label class="floating-label mb-4">
         <input type="password" class="input input-lg w-full" name="password" placeholder="Password">
         <span>Password</span>
@@ -36,6 +45,52 @@
 
 <?php $this->start('js'); ?>
 <script>
+    $('#btn-send').click(function()
+    {
+        const button = $(this);
+
+        let time_left = 60;
+
+        $.ajax({
+            url: `<?= $this->Url->build(['_name' => 'email.send']) ?>`,
+            type: 'POST',
+            data: $('[name="email"]').serialize(),
+            dataType: 'json',
+            beforeSend: function()
+            {
+                button.prop('disabled', true);
+            }
+        })
+        .done(function(res)
+        {
+            Swal.fire({
+                icon: res.status,
+                text: res.message
+            });
+
+            if (res.status == 'success')
+            {
+                const timer = setInterval(function() 
+                {   
+                    time_left--;
+
+                    button.prop('disabled', true).html(`Resend (${time_left}s)`);
+                    
+                    if (time_left < 0) 
+                    {
+                        clearInterval(timer);
+
+                        button.prop('disabled', false).html(`Resend`);
+                    }
+                }, 1000);
+            }
+        })
+        .always(function()
+        {
+            button.prop('disabled', false);
+        });
+    });
+
     $('#form-register').submit(function(e)
     {   
         e.preventDefault();
@@ -63,4 +118,3 @@
     });
 </script>
 <?php $this->end(); ?>
-

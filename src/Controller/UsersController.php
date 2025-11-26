@@ -34,7 +34,7 @@ class UsersController extends AppController
     {
         $user_id = $this->Authentication->getIdentity()->get('id');
         $user    = $this->Users->get($user_id);
-        $user    = $this->Users->patchEntity($user, $this->request->getData());
+        $user    = $this->Users->patchEntity($user, $this->request->getData(), ['validate' => 'update']);
 
         if ($user->hasErrors())
         {   
@@ -75,7 +75,7 @@ class UsersController extends AppController
     {
         $user_id = $this->Authentication->getIdentity()->get('id');
         $user    = $this->Users->get($user_id);
-        $user    = $this->Users->patchEntity($user, $this->request->getData());
+        $user    = $this->Users->patchEntity($user, $this->request->getData(), ['validate' => 'updatePassword']);
 
         if ($user->hasErrors())
         {   

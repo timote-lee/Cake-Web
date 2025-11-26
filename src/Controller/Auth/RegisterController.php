@@ -16,7 +16,7 @@ class RegisterController extends AppController
     {
         parent::beforeFilter($event);
 
-        // configure the login form and action to not require authentication, preventing
+        // configure actions to not require authentication, preventing
         // the infinite redirect loop issue
         $this->Authentication->addUnauthenticatedActions(['showRegisterForm', 'register']);
     }
@@ -34,10 +34,13 @@ class RegisterController extends AppController
     }
 
     public function register()
-    {
-        $users = $this->fetchTable('Users');
-        $user  = $users->newEntity($this->request->getData());
+    {   
+        $verificationsTable = $this->fetchTable('EmailVerifications');
+        $usersTable         = $this->fetchTable('Users');
+        
+        $user = $usersTable->newEntity($this->request->getData(), ['validate' => 'register']);
 
+        // validate
         if ($user->hasErrors())
         {   
             foreach ($user->getErrors() as $field => $messages)
@@ -47,14 +50,51 @@ class RegisterController extends AppController
                     return $this->response->withType('application/json')
                                             ->withStringBody(json_encode([
                                                 'status'  => 'error',
-                                                'message' => str_replace('field', $field, $message)
+                                                'message' => str_replace(['field', '_'], [$field, ' '], $message)
                                             ]));
                 }
             }
         }
         
 
-        if (!$users->save($user)) 
+        // check verification code
+        $verification = $verificationsTable->find()
+                                            ->where([
+                                                'code' => $this->request->getData('verification_code')
+                                            ])
+                                            ->first();
+        // verifiction code not exists
+        if (!$verification)
+        {
+            return $this->response->withType('application/json')
+                                    ->withStringBody(json_encode([
+                                        'status'  => 'error',
+                                        'message' => 'The verification code is invalid.'
+                                    ]));
+        }
+
+        // verification code is used
+        if ($verification->used)
+        {
+            return $this->response->withType('application/json')
+                                    ->withStringBody(json_encode([
+                                        'status'  => 'error',
+                                        'message' => 'The verification code has been used.'
+                                    ]));
+        }
+
+        // verification code expired after 30 minutes
+        if ($verification->created->getTimestamp() - time() > 30 * 60);
+        {
+            return $this->response->withType('application/json')
+                                    ->withStringBody(json_encode([
+                                        'status'  => 'error',
+                                        'message' => 'The verification code is expired.'
+                                    ]));
+        }
+
+
+        if (!$usersTable->save($user)) 
         {   
             return $this->response->withType('application/json')
                                     ->withStringBody(json_encode([
@@ -63,6 +103,9 @@ class RegisterController extends AppController
                                     ]));
         }
 
+
+        $verification->used = date('Y-m-d H:i:s');
+        $verificationsTable->save($verification);
 
         return $this->response->withType('application/json')
                                 ->withStringBody(json_encode([

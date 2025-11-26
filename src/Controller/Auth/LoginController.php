@@ -14,7 +14,7 @@ class LoginController extends AppController
     {
         parent::beforeFilter($event);
 
-        // configure the login form and action to not require authentication, preventing
+        // configure actions to not require authentication, preventing
         // the infinite redirect loop issue
         $this->Authentication->addUnauthenticatedActions(['showLoginForm', 'login']);
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -9,23 +10,6 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-/**
- * Users Model
- *
- * @method \App\Model\Entity\User newEmptyEntity()
- * @method \App\Model\Entity\User newEntity(array $data, array $options = [])
- * @method array<\App\Model\Entity\User> newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\User get(mixed $primaryKey, array|string $finder = 'all', \Psr\SimpleCache\CacheInterface|string|null $cache = null, \Closure|string|null $cacheKey = null, mixed ...$args)
- * @method \App\Model\Entity\User findOrCreate($search, ?callable $callback = null, array $options = [])
- * @method \App\Model\Entity\User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method array<\App\Model\Entity\User> patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\User|false save(\Cake\Datasource\EntityInterface $entity, array $options = [])
- * @method \App\Model\Entity\User saveOrFail(\Cake\Datasource\EntityInterface $entity, array $options = [])
- * @method iterable<\App\Model\Entity\User>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\User>|false saveMany(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\User>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\User> saveManyOrFail(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\User>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\User>|false deleteMany(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\User>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\User> deleteManyOrFail(iterable $entities, array $options = [])
- */
 class UsersTable extends Table
 {
     /**
@@ -41,6 +25,7 @@ class UsersTable extends Table
         $this->setTable('users');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
+        
         $this->addBehavior('Timestamp');
     }
 
@@ -81,15 +66,61 @@ class UsersTable extends Table
             ->scalar('password')
             ->minLength('password', 6)
             ->requirePresence('password', 'create')
+            ->notEmptyString('password');
+
+        return $validator;
+    }
+
+    public function validationRegister(Validator $validator): Validator
+    {
+        $validator
+            ->maxLength('name', 45)
+            ->requirePresence('name')
+            ->notEmptyString('name');
+
+        $validator
+            ->email('email')
+            ->requirePresence('email', 'create')
+            ->notEmptyString('email')
+            ->add('email', [
+                'unique' => [
+                    'rule'     => 'validateUnique', 
+                    'provider' => 'table', 
+                    'message'  => 'The email already in use.'
+                ]
+            ]);
+
+        $validator
+            ->requirePresence('verification_code')
+            ->notEmptyString('verification_code');
+
+        $validator
+            ->scalar('password')
+            ->minLength('password', 6)
+            ->requirePresence('password')
             ->notEmptyString('password')
             ->add('confirm_password', [
                 'confirm' => [
                     'rule'    => ['compareWith', 'password'],
-                    'on'      => 'create',
                     'message' => 'The confirm password do not match.'
                 ]
             ]);
 
+        return $validator;
+    }
+
+    public function validationUpdate(Validator $validator): Validator
+    {
+        $validator
+            ->maxLength('name', 45)
+            ->requirePresence('name')
+            ->notEmptyString('name');
+
+        return $validator;
+    }
+
+    public function validationUpdatePassword(Validator $validator): Validator
+    {
         $validator
             ->notEmptyString('current_password')
             ->add('current_password', [
@@ -121,6 +152,13 @@ class UsersTable extends Table
                 'confirm' => [
                     'rule'    => ['compareWith', 'new_password'],
                     'message' => 'The confirm password do not match.'
+                ],
+                'not_match' => [
+                    'rule' => function ($value, array $context) 
+                    {
+                        return $value !== $context['data']['current_password'];
+                    },
+                    'message' => 'New password cannot be the same as the current password.'
                 ]
             ]);
 

@@ -229,7 +229,7 @@ return [
             //'username' => null,
             //'password' => null,
             'client' => null,
-            'tls' => false,
+            'tls' => true,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
     ],
@@ -283,12 +283,12 @@ return [
             'className' => Connection::class,
             'driver' => Mysql::class,
             'persistent' => false,
-            'timezone' => 'UTC',
+            'timezone' => '+8:00',
 
             /*
              * For MariaDB/MySQL the internal default changed from utf8 to utf8mb4, aka full utf-8 support
              */
-            'encoding' => 'utf8mb4',
+            'encoding' => 'utf8',
 
             /*
              * If your MySQL server is configured with `skip-character-set-client-handshake`
