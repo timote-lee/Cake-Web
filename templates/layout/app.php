@@ -13,9 +13,9 @@
 
     <body class="min-h-screen bg-base-300">
         <!-- navbar -->
-        <div class="navbar bg-neutral text-neutral-content shadow-md px-10">       
+        <div class="navbar bg-neutral text-neutral-content shadow-md">       
             <div class="flex-1">
-                <span class="font-bold text-xl">JY Store</span>
+                <a href="<?= $this->Url->build(['_name' => 'home']) ?>" class="btn btn-ghost text-xl">JY Store</a>
             </div>
 
             <div class="flex-none">
@@ -41,7 +41,7 @@
         </div>
 
         <!-- main -->
-        <div class="main max-w-xl mx-auto p-5">
+        <div class="main p-5">
             <?= $this->fetch('main') ?>
         </div>
 
@@ -49,6 +49,8 @@
         <script src="//cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <script src="//code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!-- custom JS -->
         <script src="<?= $this->Url->script('base.js'); ?>"></script>
         <script>
             $('#logout').click(function(e)

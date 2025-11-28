@@ -3,7 +3,7 @@
 
 <?php $this->start('main'); ?>
 <div class="font-medium text-3xl mb-3">New Member</div>
-<div class="mb-5">Please fill up the following information.</div>
+<div class="mb-8">Please fill up the following information.</div>
 
 <form id="form-register" action="<?= $this->Url->build(['_name' => 'register']) ?>" method="POST">
     <label class="floating-label mb-4">

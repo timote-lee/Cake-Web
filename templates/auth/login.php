@@ -3,7 +3,7 @@
 
 <?php $this->start('main'); ?>
 <div class="font-medium text-3xl mb-3">Login Here</div>
-<div class="mb-5">Please enter your login credentials below.</div>
+<div class="mb-8">Please enter your login credentials below.</div>
 
 <form id="form-login" action="<?= $this->Url->build(['_name' => 'login']) ?>" method="POST">
     <label class="floating-label mb-4">

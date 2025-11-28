@@ -2,7 +2,7 @@
 <?php $this->assign('title', 'Edit Profile'); ?>
 
 <?php $this->start('main'); ?>
-<div class="card bg-white shadow-lg rounded-none">
+<div class="card bg-base-100 shadow-lg rounded-none max-w-xl mx-auto">
     <div class="card-body">
         <div class="card-title font-medium text-3xl mb-5">Edit Profile</div>
 

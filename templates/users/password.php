@@ -2,7 +2,7 @@
 <?php $this->assign('title', 'Change Password'); ?>
 
 <?php $this->start('main'); ?>
-<div class="card bg-white shadow-lg rounded-none">
+<div class="card bg-base-100 shadow-lg max-w-xl mx-auto">
     <div class="card-body">
         <div class="card-title font-medium text-3xl mb-4">Change Password</div>
 
