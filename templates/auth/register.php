@@ -72,9 +72,9 @@
             {
                 const timer = setInterval(function() 
                 {   
-                    time_left--;
-
                     button.prop('disabled', true).html(`Resend (${time_left}s)`);
+
+                    time_left--;
                     
                     if (time_left < 0) 
                     {

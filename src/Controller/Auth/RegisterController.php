@@ -84,7 +84,7 @@ class RegisterController extends AppController
         }
 
         // verification code expired after 30 minutes
-        if ($verification->created->getTimestamp() - time() > 30 * 60);
+        if (time() - $verification->created->getTimestamp() > 30 * 60)
         {
             return $this->response->withType('application/json')
                                     ->withStringBody(json_encode([
