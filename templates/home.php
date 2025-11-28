@@ -10,8 +10,12 @@
         </div>
 
         <div class="card-body">
-            <div class="font-medium text-lg"><?= $product->title ?></div>
-            <p><?= $product->description ?></p>
+            <div class="flex items-center justify-between">
+                <div class="font-medium text-lg"><?= $product->title ?></div>
+                <div class="text-xl"><?= $this->Number->currency($product->price / 1000, 'MYR'); ?></div>
+            </div>
+
+            <p><?= $this->Text->truncate($product->description, 100, ['ellipsis' => '...']) ?></p>
         </div>
     </div>
     <?php endforeach; ?>

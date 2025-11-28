@@ -133,6 +133,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
         // Load the authenticators, you want session first
         $authenticationService->loadAuthenticator('Authentication.Session');
+
         // Configure form data check to pick email and password
         $authenticationService->loadAuthenticator('Authentication.Form', [
             'fields' => [
@@ -146,8 +147,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                         'username' => 'email',
                         'password' => 'password',
                     ],
-                ],
-            ],
+                ]
+            ]
         ]);
 
         return $authenticationService;
