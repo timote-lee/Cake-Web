@@ -84,7 +84,7 @@ class EmailController extends AppController
                                                 ->where([
                                                     'email' => $this->request->getData('email')
                                                 ])
-                                                ->order(['EmailVerifications.created' => 'DESC'])
+                                                ->orderBy(['EmailVerifications.created' => 'DESC'])
                                                 ->first();
         
         if ($lastVerification && time() - $lastVerification->created->getTimestamp() < 60)
