@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>JY Store - <?= $this->fetch('title') ?></title>
+        <title>Cake - <?= $this->fetch('title') ?></title>
         <meta charset="utf-8"> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="<?= $this->request->getAttribute('csrfToken') ?>">
@@ -15,7 +15,7 @@
         <!-- navbar -->
         <div class="navbar bg-neutral text-neutral-content shadow-md">       
             <div class="flex-1">
-                <a href="<?= $this->Url->build(['_name' => 'home']) ?>" class="btn btn-ghost text-xl">JY Store</a>
+                <a href="<?= $this->Url->build(['_name' => 'home']) ?>" class="btn btn-ghost text-xl">Cake</a>
             </div>
 
             <div class="flex-none">

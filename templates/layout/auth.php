@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>JY Store - <?= $this->fetch('title') ?></title>
+        <title>Cake - <?= $this->fetch('title') ?></title>
         <meta charset="utf-8"> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="<?= $this->request->getAttribute('csrfToken') ?>">
