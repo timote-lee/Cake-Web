@@ -111,9 +111,9 @@ class EmailController extends AppController
         // email
         $mailer = new Mailer('default');
         $mailer->setEmailFormat('html')
-                ->setFrom(['invoke.jy@gmail.com' => 'JY Store'])
+                ->setFrom(['invoke.jy@gmail.com' => 'Cake'])
                 ->setTo($this->request->getData('email'))
-                ->setSubject('JY Store - Emaiil Verification')
+                ->setSubject('Cake - Emaiil Verification')
                 ->setViewVars(['code' => $code])
                 ->viewBuilder()
                     ->setTemplate('email')
